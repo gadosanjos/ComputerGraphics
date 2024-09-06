@@ -6,6 +6,7 @@ Computer Graphics, Introduction to OpenGL project for CSCI 172, covering basic r
 - OpenGL library
 - GLFW and GLEW libraries
 - GLUT (OpenGL Utility Toolkit) library
+- **`make`** (for building the project)
 
 ## Setup Instructions
 
@@ -13,4 +14,4 @@ Computer Graphics, Introduction to OpenGL project for CSCI 172, covering basic r
 Make sure you have MSYS2 installed with the MinGW 32-bit toolchain. You can install it using the following command in your MSYS2 terminal:
 
 ```bash
-pacman -S mingw-w64-i686-toolchain
+pacman -S mingw-w64-i686-toolchain mingw-w64-i686-freeglut make
