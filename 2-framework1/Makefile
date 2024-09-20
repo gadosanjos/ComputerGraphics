@@ -2,6 +2,9 @@
 CXX := C:/msys64/mingw32/bin/g++.exe #runs in msys 32
 
 # Directories
+SRC_DIR := ./src
+OBJ_DIR := ./obj
+BIN_DIR := ./bin
 INCLUDE_DIR := ../Common/include
 LIB_DIR := ../Common/lib
 
@@ -15,27 +18,33 @@ LDFLAGS := -L$(LIB_DIR) $(LIBS)
 #target: dependecies
 #	action, must use a tab!not 4 spaces
 
-# Output binary
-all: BfractalFern.exe frame.exe
+# Output binaries
+all: $(BIN_DIR)/BfractalFern.exe $(BIN_DIR)/frame.exe
 
-# Build target
-BfractalFern.exe: a.o
-	$(CXX) a.o -o BfractalFern.exe $(LDFLAGS)
+# Build BfractalFern.exe
+$(BIN_DIR)/BfractalFern.exe: $(OBJ_DIR)/a.o
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(OBJ_DIR)/a.o -o $(BIN_DIR)/BfractalFern.exe $(LDFLAGS)
 
-# Compile source files into object files
-a.o: main.cpp 
-	$(CXX) $(CXXFLAGS) -c main.cpp -o a.o
+# Compile a.o from main.cpp
+$(OBJ_DIR)/a.o: $(SRC_DIR)/main.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $(SRC_DIR)/main.cpp -o $(OBJ_DIR)/a.o
 
-# Framework target
-frame.exe: frame.o
-	$(CXX) frame.o -o frame.exe $(LDFLAGS)
+# Build frame.exe
+$(BIN_DIR)/frame.exe: $(OBJ_DIR)/frame.o
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(OBJ_DIR)/frame.o -o $(BIN_DIR)/frame.exe $(LDFLAGS)
 
-frame.o: framework.cpp
-	$(CXX) $(CXXFLAGS) -c framework.cpp -o frame.o
+# Compile frame.o from framework.cpp
+$(OBJ_DIR)/frame.o: $(SRC_DIR)/framework.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $(SRC_DIR)/framework.cpp -o $(OBJ_DIR)/frame.o
 
-clean: #calling make clean
-	rm -f *.o *.exe
+# Clean up build artifacts
+clean:
+	rm -f $(OBJ_DIR)/*.o $(BIN_DIR)/*.exe
 
-.PHONY: clean
-# removes object files and tip and geom
+.PHONY: all clean
+# removes object files and executables
 # careful to have no space after * or will remove everything!

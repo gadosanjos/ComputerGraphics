@@ -2,6 +2,9 @@
 CXX := C:/msys64/mingw32/bin/g++.exe #runs in msys 32
 
 # Directories
+SRC_DIR := ./src
+OBJ_DIR := ./obj
+BIN_DIR := ./bin
 INCLUDE_DIR := ../Common/include
 LIB_DIR := ../Common/lib
 
@@ -19,25 +22,40 @@ LDFLAGS := -L$(LIB_DIR) $(LIBS)
 #	action, must use a tab!not 4 spaces
 
 # Output binary
-all: Teapot.exe frame2.exe
+all: $(BIN_DIR)/ColorfullTeapot.exe $(BIN_DIR)/Teapot.exe $(BIN_DIR)/frame2.exe
 
-# Build target
-Teapot.exe: a.o
-	$(CXX) a.o -o Teapot.exe $(LDFLAGS)
+# Build ColorfullTeapot.exe
+$(BIN_DIR)/ColorfullTeapot.exe: $(OBJ_DIR)/tex.o
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(OBJ_DIR)/tex.o -o $(BIN_DIR)/ColorfullTeapot.exe $(LDFLAGS)
 
 # Compile source files into object files
-a.o: main.cpp 
-	$(CXX) $(CXXFLAGS) -c main.cpp -o a.o
+$(OBJ_DIR)/tex.o: $(SRC_DIR)/texturedTeapot.cpp 
+	@mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $(SRC_DIR)/texturedTeapot.cpp -o $(OBJ_DIR)/tex.o
+
+# Build target
+$(BIN_DIR)/Teapot.exe: $(OBJ_DIR)/a.o
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(OBJ_DIR)/a.o -o $(BIN_DIR)/Teapot.exe $(LDFLAGS)
+
+# Compile source files into object files
+$(OBJ_DIR)/a.o: $(SRC_DIR)/main.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $(SRC_DIR)/main.cpp -o $(OBJ_DIR)/a.o
 
 # Framework target
-frame2.exe: frame.o
-	$(CXX) frame.o -o frame.exe $(LDFLAGS)
+$(BIN_DIR)/frame2.exe: $(OBJ_DIR)/frame.o
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(OBJ_DIR)/frame.o -o $(BIN_DIR)/frame2.exe $(LDFLAGS)
 
-frame.o: framework.cpp
-	$(CXX) $(CXXFLAGS) -c framework.cpp -o frame.o
+# Compile source files into object files
+$(OBJ_DIR)/frame.o: $(SRC_DIR)/framework.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $(SRC_DIR)/framework.cpp -o $(OBJ_DIR)/frame.o
 
 clean: #calling make clean
-	rm -f *.o *.exe
+	rm -f $(OBJ_DIR)/*.o $(BIN_DIR)/*.exe
 
 .PHONY: clean
 # removes object files and tip and geom
