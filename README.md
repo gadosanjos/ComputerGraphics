@@ -15,7 +15,7 @@ Make sure you have MSYS2 installed with the MinGW 32-bit toolchain. You can inst
 
 ```bash
 pacman -S mingw-w64-i686-toolchain mingw-w64-i686-freeglut make
-
+```
 
 ## About GLUT GLFW AND GLEW
 

@@ -1,10 +1,9 @@
 # Compiler
 CXX := C:/msys64/mingw32/bin/g++.exe #runs in msys 32
-# cd /c/Users/dosan/Desktop/Main/Fresno\ State/classes/14-Fall\ 2024/csci172/csci172_Projects/vscode/firstProject
 
 # Directories
-INCLUDE_DIR := ./Common/include
-LIB_DIR := ./Common/lib
+INCLUDE_DIR := ../Common/include
+LIB_DIR := ../Common/lib
 
 # Libraries to link against -lglut32 -lopengl32 -luser32 -lgdi32 -lshell32
 LIBS := -lglut32 -lopengl32 -luser32 -lgdi32 -lshell32
@@ -17,7 +16,7 @@ LDFLAGS := -L$(LIB_DIR) $(LIBS)
 #	action, must use a tab!not 4 spaces
 
 # Output binary
-all: a.exe frame.exe
+all: a.exe frame.exe chat.exe
 
 # Build target
 a.exe: a.o
@@ -33,6 +32,13 @@ frame.exe: frame.o
 
 frame.o: framework.cpp
 	$(CXX) $(CXXFLAGS) -c framework.cpp -o frame.o
+
+# ChatGPT target
+chat.exe: chat.o
+	$(CXX) chat.o -o chat.exe $(LDFLAGS)
+
+chat.o: chatgptLine.cpp
+	$(CXX) $(CXXFLAGS) -c chatgptLine.cpp -o chat.o
 
 clean: #calling make clean
 	rm -f *.o a
