@@ -1,6 +1,9 @@
 CXX := C:/msys64/mingw32/bin/g++.exe # 32 bit
 
 # Directories
+SRC_DIR := ./src
+OBJ_DIR := ./obj
+BIN_DIR := ./bin
 INCLUDE_DIR := ../Common/include
 LIB_DIR := ../Common/lib
 
@@ -12,18 +15,21 @@ CXXFLAGS := -I$(INCLUDE_DIR)
 LDFLAGS := -L$(LIB_DIR) $(LIBS)
 
 # Output binary
-all: BfractalFern.exe
+all: $(BIN_DIR)/BfractalFern.exe 
 
 # Build target
-BfractalFern.exe: a.o
-	$(CXX) a.o -o BfractalFern.exe $(LDFLAGS)
+$(BIN_DIR)/BfractalFern.exe: $(OBJ_DIR)/a.o
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(OBJ_DIR)/a.o -o $(BIN_DIR)/BfractalFern.exe $(LDFLAGS)
 
 # Compile source files into object files
-a.o: main.cpp 
-	$(CXX) $(CXXFLAGS) -c main.cpp -o a.o
+$(OBJ_DIR)/a.o: $(SRC_DIR)/main.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $(SRC_DIR)/main.cpp -o $(OBJ_DIR)/a.o
 
-clean: #calling make clean
-	rm -f *.o *.exe
+# Clean up build artifacts
+clean:
+	rm -f $(OBJ_DIR)/*.o $(BIN_DIR)/*.exe
 
 .PHONY: clean
 # careful to have no space after * or will remove everything!
