@@ -6,3 +6,6 @@
 # Ignore build directories
 /bin/
 /obj/
+
+# Ignore editor directories
+.vscode/
