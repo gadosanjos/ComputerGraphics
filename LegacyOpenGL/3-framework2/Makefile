@@ -54,9 +54,21 @@ $(OBJ_DIR)/frame.o: $(SRC_DIR)/framework.cpp
 	@mkdir -p $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -c $(SRC_DIR)/framework.cpp -o $(OBJ_DIR)/frame.o
 
+# Run ColorfullTeapot.exe
+run: $(BIN_DIR)/ColorfullTeapot.exe
+	cd $(BIN_DIR) && ./ColorfullTeapot.exe
+
 clean: #calling make clean
 	rm -f $(OBJ_DIR)/*.o $(BIN_DIR)/*.exe
 
 .PHONY: clean
 # removes object files and tip and geom
 # careful to have no space after * or will remove everything!
+
+# When you run the command make run from the root directory of your project, the working directory is where you executed the make run command. 
+# In this case, the relative path ../images/t.jpg is being interpreted relative to the root directory, not the bin directory where your executable is located.
+
+# However, when you navigate directly to the bin directory and run ./ColorfullTeapot.exe,
+# the executable is looking for the image relative to the bin directory, which works as expected.
+
+# Solution: cd $(BIN_DIR) && ./ColorfullTeapot.exe for run command

@@ -122,7 +122,7 @@ static void init(void)
     glGenTextures(1, &tex);
     glEnable(GL_TEXTURE_2D);
 
-    TextureLoader("../images/t.jpg");
+    TextureLoader("../images/2k_earth_daymap.jpg");
     
 }
 
