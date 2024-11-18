@@ -223,7 +223,7 @@ static void display(void)
     gluSphere(sphere,3.0, 40,40); // Draws Sphere (radius, slices, stack)
     glPopMatrix();
 
-    glutSwapBuffers();
+    glutSwapBuffers(); // Swap from rendering buffer to viewing buffer made available in glutInitDisplayMode(GLUT_DOUBLE)
 }
 
 static void key(unsigned char key, int x, int y)
@@ -384,7 +384,7 @@ void Specialkeys(int key, int x, int y)
 
 static void idle(void)
 {
-    glutPostRedisplay();
+    glutPostRedisplay(); // used to keep events going, since glut usually wont keep look going if no events happen, this will can render again
 }
 
 static void init(void)

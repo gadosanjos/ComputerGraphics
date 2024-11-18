@@ -105,7 +105,7 @@ static void display(void)
     glutSolidSphere (1.3, 20, 20); // Draws Sphere (radius, slices, stack)
     glPopMatrix();
 
-    glutSwapBuffers();
+    glutSwapBuffers(); // Swap from rendering buffer to viewing buffer made available in glutInitDisplayMode(GLUT_DOUBLE)
 }
 
 static void key(unsigned char key, int x, int y)

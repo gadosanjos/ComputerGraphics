@@ -56,7 +56,7 @@ static void display(void)
 
     // your code here
 
-    glutSwapBuffers();
+    glutSwapBuffers(); // Swap from rendering buffer to viewing buffer made available in glutInitDisplayMode(GLUT_DOUBLE)
 }
 
 static void key(unsigned char key, int x, int y)
