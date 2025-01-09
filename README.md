@@ -1,5 +1,5 @@
-# OpenGL-Intro-CSCI172
-Computer Graphics, Introduction to OpenGL project for CSCI 172, covering basic rendering, shaders, and transformations.
+# OpenGL
+Computer Graphics, using OpenGL, covering basic rendering, shaders, and transformations.
 
 ## Requirements
 - MSYS2 32-bit terminal (for MinGW 32-bit toolchain)
