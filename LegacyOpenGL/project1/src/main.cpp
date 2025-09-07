@@ -135,7 +135,7 @@ void display(void)
         y = b*x0 + d*y_init + f;    // Calculate new y-coordinate
 
         // Set the color for the point
-        glColor3f(0.0f,1.0f,0.0f);
+        glColor3f(0.5f,0.7f,0.0f);
 
         // Plot the point at the new (x, y) position
         glBegin(GL_POINTS);         // Begin drawing a point

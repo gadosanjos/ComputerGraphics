@@ -87,3 +87,65 @@ pacman -S mingw-w64-i686-toolchain mingw-w64-i686-freeglut make
 - **Use GLEW** when you’re working with advanced OpenGL features, especially when targeting different hardware or when using modern OpenGL versions that require extensions not available in the basic API.
 
 In many real-world OpenGL projects, **GLFW + GLEW** is a common combination: GLFW handles windowing and input, while GLEW ensures that your application can access the latest OpenGL features. 
+
+---
+
+## 🔑 What an **OpenGL Context** is
+
+* OpenGL by itself is **just a specification** — it describes a huge set of functions (`glClearColor`, `glDrawArrays`, etc.), but it doesn’t exist as a normal library you just call into.
+* Those functions are actually implemented in your **GPU driver**.
+* To talk to that driver, you need to create a **context**:
+  👉 A context is basically a "state machine" object that holds *all* of OpenGL’s state — buffers, textures, shaders, current settings.
+  Without a context, there’s no OpenGL state to call functions against, so `gl*` functions would do nothing (or crash).
+
+Think of it as:
+
+* The **context = OpenGL’s workspace**.
+* You *must* have one before you can issue any draw calls.
+
+---
+
+## 🔎 Who creates the context?
+
+OpenGL itself doesn’t create contexts — it relies on **windowing systems or helper libraries**:
+
+* On **Windows**, contexts are created via the Win32 API (`wglCreateContext`).
+* On **Linux**, contexts are created with GLX (X11) or EGL (Wayland).
+* On **macOS**, via CGL or NSOpenGL.
+
+Since that’s a pain to do manually, we use libraries:
+
+* **GLFW / GLUT / SDL** → create a **window** *and* an **OpenGL context**.
+* **GLEW / GLAD** → *do not* create contexts. They just **load function pointers** for modern OpenGL features *after* a context exists.
+
+---
+
+## ⚡ So in terms:
+
+* **The context is not GLEW.**
+* **The context is created by GLFW** (or GLUT, or SDL, etc.).
+
+Sequence looks like this:
+
+1. You ask GLFW to open a window (`glfwCreateWindow`).
+2. GLFW creates a **window + OpenGL context**.
+3. You make that context “current” (`glfwMakeContextCurrent`).
+4. Only *after that* you initialize **GLEW** → `glewInit()`.
+
+   * Because GLEW queries the driver for all the `gl*` functions, which won’t exist until a context is active.
+
+---
+
+## ✅ Analogy
+
+Think of it like this:
+
+* **OpenGL context** = the actual *workspace/desk* where you do your work.
+* **GLFW** = the carpenter who builds the desk (and the room around it = the window).
+* **GLEW** = the catalog that tells you which tools are available on that desk.
+
+No desk (context) → nowhere to work.
+No carpenter (GLFW/GLUT) → no desk gets built.
+No catalog (GLEW) → you have a desk but don’t know which tools are in the drawers.
+
+---
